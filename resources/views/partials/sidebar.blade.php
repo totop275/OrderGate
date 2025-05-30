@@ -25,7 +25,7 @@
             @else
             @canany($item['permissions'] ?? [])
                 <li class="nav-item">
-                    <a href="{{ route($item['route']) }}" class="nav-link {{ request()->routeIs($item['route']) ? 'active' : '' }}">
+                    <a href="{{ route($item['route']) }}" class="nav-link {{ ((($activeSidebar ?? null) == $item['route']) || request()->routeIs($item['route'])) ? 'active' : '' }}">
                         <i class="{{ $item['icon'] }}"></i>
                         <span>{{ $item['label'] }}</span>
                     </a>

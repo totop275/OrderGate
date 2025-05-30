@@ -36,7 +36,8 @@ class CustomerController extends Controller
 
     public function create()
     {
-        return view('master.customer.create');
+        $activeSidebar = 'customers.index';
+        return view('master.customer.create', compact('activeSidebar'));
     }
 
     public function store(Request $request)
@@ -61,7 +62,8 @@ class CustomerController extends Controller
 
     public function edit(Customer $customer)
     {
-        return view('master.customer.edit', compact('customer'));
+        $activeSidebar = 'customers.index';
+        return view('master.customer.edit', compact('customer', 'activeSidebar'));
     }
 
     public function update(Request $request, Customer $customer)

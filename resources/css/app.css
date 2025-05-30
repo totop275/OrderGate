@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import 'datatables.net-bs5';
+@import 'select2';
+@import 'select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -174,4 +176,22 @@ footer p {
 
 table.dataTable.table th {
     text-align: center !important;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field:focus {
+    border-color: #00c7c9;
+    box-shadow: none;
+}
+
+.select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection {
+    border-color: #00c7c9;
+    box-shadow: none;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown {
+    border-color: #00c7c9;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--selected, .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option[aria-selected=true]:not(.select2-results__option--highlighted) {
+    background-color: #00c7c9;
 }

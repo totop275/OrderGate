@@ -36,7 +36,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('master.product.create');
+        return view('master.product.create', ['activeSidebar' => 'products.index']);
     }
 
     public function store(Request $request)
@@ -67,7 +67,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('master.product.edit', compact('product'));
+        $activeSidebar = 'products.index';
+        return view('master.product.edit', compact('product', 'activeSidebar'));
     }
 
     public function update(Request $request, Product $product)

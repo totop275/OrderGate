@@ -12,6 +12,12 @@ return [
         'label' => 'Orders',
     ],
     [
+        'label' => 'Create new order',
+        'icon' => 'bx bx-plus',
+        'route' => 'orders.create',
+        'permissions' => ['orders.create'],
+    ],
+    [
         'label' => 'Orders',
         'icon' => 'bx bxs-cart',
         'route' => 'orders.index',

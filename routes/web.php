@@ -15,11 +15,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::resource('orders', OrderController::class);
-    Route::resource('products', ProductController::class);
-    Route::resource('customers', CustomerController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
+    Route::resource('orders', OrderController::class)->except(['edit']);
+    Route::resource('products', ProductController::class)->except(['show']);
+    Route::resource('customers', CustomerController::class)->except(['show']);
+    Route::resource('users', UserController::class)->except(['show']);
+    Route::resource('roles', RoleController::class)->except(['show']);
 });
 
 Route::middleware('guest')->group(function () {
