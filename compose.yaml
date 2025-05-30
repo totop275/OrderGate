@@ -1,0 +1,43 @@
+services:
+  octane:
+    image: simple-order-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    entrypoint: ["/app/entrypoint.sh"]
+    command: ["/bin/sh", "-c", "php /app/artisan octane:frankenphp --watch"]
+    restart: unless-stopped
+
+  cron:
+    image: simple-order-dev
+    volumes:
+      - .:/app
+    healthcheck:
+      test: ["CMD", "pgrep", "cron"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: /bin/sh -c "cron -f"
+    restart: unless-stopped
+    depends_on:
+      octane:
+        condition: service_healthy
+
+  queue:
+    image: simple-order-dev
+    volumes:
+      - .:/app
+    healthcheck:
+      test: ["CMD", "pgrep", "php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: ["/bin/sh", "-c", "/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf"]
+    depends_on:
+      octane:
+        condition: service_healthy
+    restart: unless-stopped
