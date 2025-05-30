@@ -9,3 +9,136 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Import Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Custom styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+main {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 1rem 0 0 0;
+}
+
+main.auth {
+    justify-content: center;
+}
+
+#sidebar {
+    width: 100%;
+    margin-right: 1rem;
+    border: 1px solid var(--bs-border-color);
+    padding: 1rem;
+    border-radius: var(--bs-border-radius);
+    background-color: white;
+}
+
+#sidebar .nav-link {
+    padding: 0.5rem 0;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    color: #151a22;
+    font-weight: 600;
+}
+
+#sidebar .nav-link i {
+    width: 20px;
+    text-align: center;
+    margin: 0 0.5rem;
+}
+
+#sidebar .nav-link.active {
+    background-color: #00c7c9;
+    color: #fff;
+    padding: 0.5rem .5rem;
+}
+
+#sidebar .nav-link:not(.active):hover {
+    background-color: #e9ecef;
+    padding: 0.5rem 0.5rem;
+}
+
+#sidebar .nav-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 1rem 0 0.5rem 0;
+    margin-bottom: 0.5rem;
+    color: #6c757d;
+}
+
+#content-card {
+    min-height: calc(100vh - 130px);
+}
+
+footer {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 1rem;
+}
+footer p {
+    color: #6c757d;
+    margin: 0;
+}
+
+#logout-form button:hover {
+    color: var(--bs-danger);
+}
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #151a22;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+}
+.navbar-brand span {
+    color: #00c7c9;
+}
+
+.page-title {
+    margin-bottom: 1.5rem;
+}
+.page-title h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #151a22;
+    margin: 0;
+}
+.page-title p {
+    color: #6c757d;
+    margin: 0.5rem 0 0 0;
+}
+
+.btn-primary {
+    background-color: #00c7c9;
+    border-color: #00c7c9;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #00b3b5 !important;
+    border-color: #00b3b5 !important;
+}
+
+.form-control:focus {
+    border-color: #00c7c9;
+    box-shadow: 0 0 0 0.25rem rgba(0, 199, 201, 0.25);
+}
+
+.form-control:focus-visible {
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
