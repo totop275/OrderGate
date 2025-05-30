@@ -1,5 +1,14 @@
 import './bootstrap';
 import * as bootstrap from 'bootstrap';
+import jQuery from "jquery";
+import 'datatables.net';
+import 'datatables.net-bs5';
+import Inputmask from 'inputmask';
+import Swal from 'sweetalert2';
+
+window.$ = jQuery;
+window.jQuery = jQuery;
+window.Swal = Swal;
 
 import.meta.glob([
     '../images/**',

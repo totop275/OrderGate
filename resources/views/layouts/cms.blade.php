@@ -28,13 +28,19 @@
                 <div class="col-md-3">
                     @include('partials.sidebar')
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" id="content-container">
                     <div class="card" id="content-card">
                         <div class="card-body">
                             <div class="page-title">
-                                <h1>@yield('page_title')</h1>
-                                <p>@yield('page_subtitle')</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h1>@yield('page_title')</h1>
+                                        <p>@yield('page_subtitle')</p>
+                                    </div>
+                                    @yield('page_actions')
+                                </div>
                             </div>
+                            @include('partials.alert')
                             @yield('content')
                         </div>
                     </div>

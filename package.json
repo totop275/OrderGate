@@ -17,6 +17,11 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
-        "bootstrap": "^5.3.6"
+        "bootstrap": "^5.3.6",
+        "datatables.net": "^2.3.1",
+        "datatables.net-bs5": "^2.3.1",
+        "inputmask": "^5.0.9",
+        "jquery": "^3.7.1",
+        "sweetalert2": "^11.22.0"
     }
 }
