@@ -18,8 +18,20 @@ class OrderController extends Controller
             $query = Order::with('customer')->select('orders.*');
             $cb = fn ($fn) => $fn;
 
-            if ($request->has('status')) {
-                $query->where('status', $request->status);
+            if ($request->status) {
+                if (is_array($request->status)) {
+                    $query->whereIn('status', $request->status);
+                } else {
+                    $query->where('status', $request->status);
+                }
+            }
+
+            if ($request->start_date) {
+                $query->whereDate('order_date', '>=', $request->start_date);
+            }
+
+            if ($request->end_date) {
+                $query->whereDate('order_date', '<=', $request->end_date);
             }
 
             return DataTables::of($query)

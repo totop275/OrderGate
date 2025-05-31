@@ -9,6 +9,31 @@
 @endsection
 
 @section('content')
+<div class="row mb-4" id="filters">
+    <div class="col-md-4">
+        <label class="form-label">Date Start</label>
+        <div class="form-group">
+            <input type="date" class="form-control" id="start_date">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Date End</label>
+        <div class="form-group">
+            <input type="date" class="form-control" id="end_date">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Status</label>
+        <div class="form-group">
+            <select class="form-select select2" id="status" multiple>
+                <option value="">All</option>
+                <option value="new">New</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+        </div>
+    </div>
+</div>
 <table class="table table-bordered table-hover mt-2 mb-2" id="main-table">
     <thead>
         <tr>
@@ -33,7 +58,14 @@
             scrollX: true,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('orders.index') }}",
+            ajax: {
+                url: "{{ route('orders.index') }}",
+                data: function(d) {
+                    d.start_date = $('#start_date').val();
+                    d.end_date = $('#end_date').val();
+                    d.status = $('#status').val();
+                }
+            },
             columns: [
                 {
                     data: 'id',
@@ -143,6 +175,15 @@
                     });
                 }
             });
+        });
+
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'All',
+        });
+
+        $('#filters').on('change', '#start_date, #end_date, #status', function() {
+            $('#main-table').DataTable().ajax.reload();
         });
     });
 </script>
