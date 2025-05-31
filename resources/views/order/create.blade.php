@@ -303,6 +303,7 @@
                                     showConfirmButton: true,
                                     confirmButtonText: 'OK',
                                 }).then(() => {
+                                    changedState = false;
                                     window.location.href = '{{ route('orders.show', ['order' => ':id']) }}'.replace(':id', response.data.order_number);
                                 });
                             },
