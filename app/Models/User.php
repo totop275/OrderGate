@@ -14,6 +14,9 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, HasApiTokens;
 
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
     ];
 
     /**
@@ -46,5 +50,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('status', self::STATUS_INACTIVE);
     }
 }

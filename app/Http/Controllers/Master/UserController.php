@@ -49,13 +49,15 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'roles' => 'required|array'
+            'roles' => 'required|array',
+            'status' => 'required|in:' . implode(',', [User::STATUS_ACTIVE, User::STATUS_INACTIVE]),
         ]);
         
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['password'])
+            'password' => Hash::make($validated['password']),
+            'status' => $validated['status'],
         ]);
 
         $user->syncRoles($validated['roles']);
@@ -83,12 +85,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8',
-            'roles' => 'required|array'
+            'roles' => 'required|array',
+            'status' => 'required|in:' . implode(',', [User::STATUS_ACTIVE, User::STATUS_INACTIVE]),
         ]);
         
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'status' => $validated['status'],
         ]);
 
         if (!empty($validated['password'])) {

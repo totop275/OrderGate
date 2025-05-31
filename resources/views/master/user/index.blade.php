@@ -16,6 +16,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Roles</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -67,6 +68,13 @@
                     render: function(data, type, row) {
                         if (!data || !data.length) return '<em class="text-muted">No roles</em>';
                         return data.map(r => `<span class="badge bg-secondary bg-sm me-1">${r.name}</span>`).join('');
+                    }
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data, type, row) {
+                        return `<span class="badge bg-${data === 'active' ? 'success' : 'danger'} bg-sm">${data}</span>`;
                     }
                 },
                 { data: 'action', name: 'action', orderable: false, searchable: false }

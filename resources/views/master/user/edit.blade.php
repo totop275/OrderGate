@@ -62,6 +62,15 @@
         @enderror
     </div>
 
+    <div class="mb-3">
+        <label class="form-label d-block">Status</label>
+        <div class="form-check form-switch form-switch-lg">
+            <input type="hidden" name="status" value="{{ \App\Models\User::STATUS_INACTIVE }}">
+            <input class="form-check-input" type="checkbox" id="status" name="status" value="{{ \App\Models\User::STATUS_ACTIVE }}" {{ old('status', $user->status) == \App\Models\User::STATUS_ACTIVE ? 'checked' : '' }}>
+            <label class="form-check-label" for="status">Active</label>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-end gap-2">
         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
         <button type="submit" class="btn btn-primary">Update User</button>

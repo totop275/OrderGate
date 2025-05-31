@@ -12,25 +12,25 @@
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Total Orders</h3>
-            <div class="value">1,234</div>
+            <div class="value">{{ number_format($totalOrders, 0) }}</div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Total Sales</h3>
-            <div class="value">$45,678</div>
+            <div class="value">${{ number_format($totalSales, 2) }}</div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Active Users</h3>
-            <div class="value">856</div>
+            <div class="value">{{ number_format($activeUsers, 0) }}</div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Inactive Users</h3>
-            <div class="value">123</div>
+            <div class="value">{{ number_format($inactiveUsers, 0) }}</div>
         </div>
     </div>
 </div>
@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(orderStatusCtx, {
         type: 'pie',
         data: {
-            labels: ['Pending', 'Processing', 'Completed', 'Cancelled'],
+            labels: @json(array_keys($orderBreakdowns)),
             datasets: [{
-                data: [30, 25, 35, 10],
-                backgroundColor: ['#FFC107', '#17A2B8', '#28A745', '#DC3545']
+                data: @json(array_values($orderBreakdowns)),
+                backgroundColor: ['#00c8ed', '#008757', '#e63a48']
             }]
         },
         options: {
@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(monthlySalesCtx, {
         type: 'bar',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: @json(array_column($monthlySales, 'month')),
             datasets: [{
                 label: 'Sales ($)',
-                data: [12000, 19000, 15000, 25000, 22000, 30000],
-                backgroundColor: '#00c7c9'
+                data: @json(array_column($monthlySales, 'total_sales')),
+                backgroundColor: '#00c8ed'
             }]
         },
         options: {

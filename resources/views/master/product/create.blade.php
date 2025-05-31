@@ -50,6 +50,7 @@
     </div>
 
     <div class="mb-3">
+        <label class="form-label d-block">Status</label>
         <div class="form-check form-switch form-switch-lg">
             <input type="hidden" name="status" value="{{ \App\Models\Product::STATUS_INACTIVE }}">
             <input class="form-check-input" type="checkbox" id="status" name="status" value="{{ \App\Models\Product::STATUS_ACTIVE }}" {{ old('status', \App\Models\Product::STATUS_ACTIVE) == \App\Models\Product::STATUS_ACTIVE ? 'checked' : '' }}>
