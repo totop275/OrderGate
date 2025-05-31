@@ -55,22 +55,10 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name',
-            'permissions' => 'required|array'
-        ]);
-
-        $role = Role::create(['name' => $validated['name']]);
-        $role->givePermissionTo($validated['permissions']);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'Role created successfully.',
-            ]);
-        }
+        $apiResponse = (new RoleApiController)->store($request);
 
         return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
     public function edit(Role $role)
@@ -82,38 +70,18 @@ class RoleController extends Controller
         return view('master.role.edit', compact('role', 'activeSidebar', 'permissionGroups'));
     }
 
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $role)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
-            'permissions' => 'required|array'
-        ]);
-        
-        $role->update(['name' => $validated['name']]);
-        $role->syncPermissions($validated['permissions']);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'Role updated successfully.',
-            ]);
-        }
+        $apiResponse = (new RoleApiController)->update($request, $role);
 
         return redirect()->route('roles.index')
-            ->with('success', 'Role updated successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
-    public function destroy(Role $role)
+    public function destroy($role)
     {
-        if ($role->name === 'Admin') {
-            return response()->json([
-                'message' => 'Admin role cannot be deleted.',
-            ], 400);
-        }
+        $apiResponse = (new RoleApiController)->destroy($role);
 
-        $role->delete();
-
-        return response()->json([
-            'message' => 'Role deleted successfully.',
-        ]);
+        return $apiResponse;
     }
 }

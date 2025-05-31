@@ -66,14 +66,4 @@ class OrderController extends Controller
 
         return view('order.show', compact('order', 'activeSidebar'));
     }
-
-    public function destroy(Order $order)
-    {
-        $order->products()->detach();
-        $order->delete();
-
-        return response()->json([
-            'message' => 'Order deleted successfully.',
-        ]);
-    }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('token', [LoginController::class, 'generateToken'])->name('api.login');
 
-Route::middleware('auth:sanctum')->as('api.')->group(function () {
+Route::middleware(['auth:sanctum'])->as('api.')->group(function () {
     Route::get('me', [LoginController::class, 'me'])->name('me');
     Route::post('logout', [LoginController::class, 'logoutApi'])
         ->name('logout');

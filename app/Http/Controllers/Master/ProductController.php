@@ -53,28 +53,10 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'sku' => 'string|max:255|unique:products,sku',
-            'status' => 'string|in:' . implode(',', [Product::STATUS_ACTIVE, Product::STATUS_INACTIVE])
-        ]);
-
-        if (!$validated['sku']) {
-            $validated['sku'] = 'P' . date('YmdHis') . rand(100, 999);
-        }
-
-        Product::create($validated);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'Product created successfully.',
-            ]);
-        }
+        $apiResponse = (new ProductApiController)->store($request);
 
         return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
     public function edit(Product $product)
@@ -83,38 +65,18 @@ class ProductController extends Controller
         return view('master.product.edit', compact('product', 'activeSidebar'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'sku' => 'string|max:255|unique:products,sku,' . $product->id,
-            'status' => 'string|in:' . implode(',', [Product::STATUS_ACTIVE, Product::STATUS_INACTIVE])
-        ]);
-
-        if (!$validated['sku']) {
-            unset($validated['sku']);
-        }
-
-        $product->update($validated);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'Product updated successfully.',
-            ]);
-        }
+        $apiResponse = (new ProductApiController)->update($request, $product);
 
         return redirect()->route('products.index')
-            ->with('success', 'Product updated successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
-    public function destroy(Product $product)
+    public function destroy($product)
     {
-        $product->delete();
+        $apiResponse = (new ProductApiController)->destroy($product);
 
-        return response()->json([
-            'message' => 'Product deleted successfully.',
-        ]);
+        return $apiResponse;
     }
 }

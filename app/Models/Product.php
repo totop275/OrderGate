@@ -30,4 +30,9 @@ class Product extends Model
     {
         return $query->where('status', self::STATUS_ACTIVE);
     }
+
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
 } 

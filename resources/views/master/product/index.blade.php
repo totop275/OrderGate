@@ -122,7 +122,7 @@
                             $('#main-table').DataTable().ajax.reload();
                             Swal.fire({
                                 title: 'Error!',
-                                text: response.message || 'Something went wrong!',
+                                text: xhr.responseJSON?.message || 'Something went wrong!',
                                 icon: 'error',
                             });
                         }

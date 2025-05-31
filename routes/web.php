@@ -18,14 +18,14 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('dashboard')
         ->middleware('can:dashboard');
 
-    Route::resource('orders', OrderController::class)->except(['edit', 'destroy']);
+    Route::resource('orders', OrderController::class)->except(['edit', 'destroy', 'store', 'update']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::resource('customers', CustomerController::class)->except(['show']);
     Route::resource('users', UserController::class)->except(['show']);
     Route::resource('roles', RoleController::class)->except(['show']);
 });
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'web'])->group(function () {
     Route::get('/login', [LoginController::class, 'loginView'])->name('login_view');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 });

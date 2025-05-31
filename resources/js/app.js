@@ -9,6 +9,12 @@ import Swal from 'sweetalert2';
 import select2 from'select2';
 import toastr from 'toastr';
 
+jQuery.ajaxSetup({
+    headers: {
+        'Accept': 'application/json',
+    }
+});
+
 window.$ = jQuery;
 window.jQuery = jQuery;
 window.Swal = Swal;

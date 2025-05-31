@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 abstract class BaseCRUDController extends Controller
 {
     protected $model;
+    protected $freeText = [];
 
     public function __construct()
     {
@@ -24,6 +25,8 @@ abstract class BaseCRUDController extends Controller
     {
         $query = $this->model::query();
 
+        $this->advancedFilter($request, $query);
+
         $blankModel = new $this->model();
         $fillable = $blankModel->getFillable();
         $hidden = $blankModel->getHidden();
@@ -31,8 +34,12 @@ abstract class BaseCRUDController extends Controller
         $filterable = array_diff($fillable, $hidden);
 
         foreach ($filterable as $field) {
-            if ($request->has($field)) {
-                $query->where($field, $request->$field);
+            if ($request->has($field) && $request->$field !== null) {
+                if (in_array($field, $this->freeText)) {
+                    $query->where($field, 'like', '%' . $request->$field . '%');
+                } else {
+                    $query->where($field, $request->$field);
+                }
             }
         }
         

@@ -53,31 +53,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'roles' => 'required|array',
-            'status' => 'required|in:' . implode(',', [User::STATUS_ACTIVE, User::STATUS_INACTIVE]),
-        ]);
-        
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'status' => $validated['status'],
-        ]);
-
-        $user->syncRoles($validated['roles']);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'User created successfully.',
-            ]);
-        }
+        $apiResponse = (new UserApiController)->store($request);
 
         return redirect()->route('users.index')
-            ->with('success', 'User created successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
     public function edit(User $user)
@@ -87,50 +66,18 @@ class UserController extends Controller
         return view('master.user.edit', compact('user', 'activeSidebar', 'roles'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8',
-            'roles' => 'required|array',
-            'status' => 'required|in:' . implode(',', [User::STATUS_ACTIVE, User::STATUS_INACTIVE]),
-        ]);
-        
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'status' => $validated['status'],
-        ]);
-
-        if (!empty($validated['password'])) {
-            $user->update(['password' => Hash::make($validated['password'])]);
-        }
-
-        $user->syncRoles($validated['roles']);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'User updated successfully.',
-            ]);
-        }
+        $apiResponse = (new UserApiController)->update($request, $user);
 
         return redirect()->route('users.index')
-            ->with('success', 'User updated successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
-    public function destroy(User $user)
+    public function destroy($user)
     {
-        if ($user->id === request()->user()->id) {
-            return response()->json([
-                'message' => 'You cannot delete your own account.',
-            ], 400);
-        }
+        $apiResponse = (new UserApiController)->destroy($user);
 
-        $user->delete();
-
-        return response()->json([
-            'message' => 'User deleted successfully.',
-        ]);
+        return $apiResponse;
     }
 }

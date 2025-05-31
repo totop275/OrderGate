@@ -26,7 +26,7 @@ class LoginController extends Controller
             return redirect()->route('login')->withErrors(['email' => 'Email not registered in the system'])->withInput();
         }
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::guard('web')->attempt($request->only('email', 'password'))) {
             return redirect()->route('landing');
         }
 
@@ -60,7 +60,7 @@ class LoginController extends Controller
 
     public function me()
     {
-        return response()->json(request()->user());
+        return ['data' => request()->user()];
     }
 
     public function logout()

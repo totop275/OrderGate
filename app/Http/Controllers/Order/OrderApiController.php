@@ -107,6 +107,14 @@ class OrderApiController extends BaseCRUDController
             'verified_at' => now(),
         ]);
 
+        if ($validated['status'] === Order::STATUS_CANCELLED) {
+            $order->load('orderProducts.product');
+            $order->orderProducts()->each(function ($orderProduct) {
+                $orderProduct->product->stock += $orderProduct->quantity;
+                $orderProduct->product->save();
+            });
+        }
+
         return response()->json([
             'message' => 'Order ' . $validated['status'] . ' successfully.',
         ]);

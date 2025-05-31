@@ -50,22 +50,10 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string|max:20'
-        ]);
-        
-        Customer::create($validated);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'Customer created successfully.',
-            ]);
-        }
+        $apiResponse = (new CustomerApiController)->store($request);
 
         return redirect()->route('customers.index')
-            ->with('success', 'Customer created successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
     public function edit(Customer $customer)
@@ -74,32 +62,18 @@ class CustomerController extends Controller
         return view('master.customer.edit', compact('customer', 'activeSidebar'));
     }
 
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $customer)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string|max:20'
-        ]);
-        
-        $customer->update($validated);
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message' => 'Customer updated successfully.',
-            ]);
-        }
+        $apiResponse = (new CustomerApiController)->update($request, $customer);
 
         return redirect()->route('customers.index')
-            ->with('success', 'Customer updated successfully.');
+            ->with('success', $apiResponse['message']);
     }
 
-    public function destroy(Customer $customer)
+    public function destroy($customer)
     {
-        $customer->delete();
+        $apiResponse = (new CustomerApiController)->destroy($customer);
 
-        return response()->json([
-            'message' => 'Customer deleted successfully.',
-        ]);
+        return $apiResponse;
     }
 }
