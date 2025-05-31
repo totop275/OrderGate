@@ -13,7 +13,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            $query = Role::with('permissions');
+            $query = Role::with('permissions')->select('roles.*');
             $cb = fn ($fn) => $fn;
 
             return DataTables::of($query)
