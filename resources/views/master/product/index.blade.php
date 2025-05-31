@@ -9,6 +9,18 @@
 @endsection
 
 @section('content')
+<div class="row mb-4" id="filters">
+    <div class="col-md-4">
+        <label class="form-label">Status</label>
+        <div class="form-group">
+            <select class="form-select select2" id="status" data-placeholder="All">
+                <option></option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+    </div>
+</div>
 <table class="table table-bordered table-hover mt-2 mb-2" id="main-table">
     <thead>
         <tr>
@@ -33,7 +45,12 @@
             scrollX: true,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('products.index') }}",
+            ajax: {
+                url: "{{ route('products.index') }}",
+                data: function(d) {
+                    d.status = $('#status').val();
+                }
+            },
             columns: [
                 {
                     data: 'sku',
@@ -129,6 +146,15 @@
                     });
                 }
             });
+        });
+
+        $('#status').on('change', function() {
+            $('#main-table').DataTable().ajax.reload();
+        });
+
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+            allowClear: true,
         });
     });
 </script>

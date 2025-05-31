@@ -23,7 +23,7 @@ class ProductController extends Controller
             $query = Product::query();
             $cb = fn ($fn) => $fn;
 
-            if ($request->has('status')) {
+            if ($request->has('status') && $request->status) {
                 $query->where('status', $request->status);
             }
 
