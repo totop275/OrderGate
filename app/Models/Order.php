@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
@@ -16,12 +17,16 @@ class Order extends Model
         'order_number',
         'order_date',
         'total_amount',
-        'status'
+        'status',
+        'created_by',
+        'verified_by',
+        'verified_at'
     ];
 
     protected $casts = [
         'order_date' => 'date',
-        'total_amount' => 'decimal:2'
+        'total_amount' => 'decimal:2',
+        'verified_at' => 'datetime:Y-m-d H:i:s'
     ];
 
     public const STATUS_NEW = 'new';
@@ -33,10 +38,18 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function products(): BelongsToMany
+    public function orderProducts(): HasMany
     {
-        return $this->belongsToMany(Product::class, 'order_products')
-            ->withPivot(['quantity', 'price', 'total'])
-            ->withTimestamps();
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function verifier(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'verified_by');
     }
 }

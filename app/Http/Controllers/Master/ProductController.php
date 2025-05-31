@@ -15,6 +15,10 @@ class ProductController extends Controller
             $query = Product::query();
             $cb = fn ($fn) => $fn;
 
+            if ($request->has('status')) {
+                $query->where('status', $request->status);
+            }
+
             return DataTables::of($query)
                 ->addColumn('action', function ($product) use ($cb) {
                     return <<<HTML

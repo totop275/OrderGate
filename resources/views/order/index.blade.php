@@ -18,7 +18,6 @@
             <th>Order Date</th>
             <th>Total Amount</th>
             <th>Status</th>
-            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +30,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         $('#main-table').DataTable({
             theme: 'bootstrap5',
+            scrollX: true,
             processing: true,
             serverSide: true,
             ajax: "{{ route('orders.index') }}",
@@ -39,7 +39,7 @@
                     data: 'id',
                     name: 'id',
                     orderable: false,
-                    searchable: true,
+                    searchable: false,
                     render: function(data, type, row, meta) {
                         return `<div class="text-decoration-none fw-bold text-center">
                             ${meta.settings._iDisplayStart + meta.row + 1}
@@ -50,45 +50,46 @@
                     data: 'order_number',
                     name: 'order_number',
                     render: function(data, type, row) {
-                        return `<div class="text-decoration-none">
-                            <div class="fw-bold">${data}</div>
-                        </div>`;
+                        return `
+                            <a href="${'{{ route('orders.show', ':id') }}'.replace(':id', data)}" class="text-decoration-none text-primary">
+                                ${data}
+                            </a>
+                        `;
                     }
                 },
                 {
                     data: 'customer.name',
                     name: 'customer.name',
-                    render: function(data, type, row) {
-                        return `<div class="text-decoration-none">
-                            <div class="fw-bold">${data}</div>
-                        </div>`;
-                    }
+                    searchable: false,
+                    orderable: false,
                 },
                 {
                     data: 'order_date',
                     name: 'order_date',
+                    searchable: false,
                     render: function(data, type, row) {
-                        return `<div class="text-center">
-                            ${data}
-                        </div>`;
+                        return Intl.DateTimeFormat(undefined).format(new Date(row.order_date));
                     }
                 },
                 {
                     data: 'total_amount',
                     name: 'total_amount',
+                    searchable: false,
                     render: function(data) {
-                        return `<div class="text-end">
-                            Rp ${parseFloat(data).toLocaleString('id-ID')}
-                        </div>`;
+                        return Intl.NumberFormat(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }).format(data);
                     }
                 },
                 {
                     data: 'status',
                     name: 'status',
+                    searchable: false,
+                    orderable: false,
                     render: function(data, type, row) {
                         const statusColors = {
-                            'pending': 'warning',
-                            'processing': 'info',
+                            'new': 'info',
                             'completed': 'success',
                             'cancelled': 'danger'
                         };
@@ -97,7 +98,6 @@
                         </div>`;
                     }
                 },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
             ],
             language: {
                 lengthMenu: "Show: _MENU_",

@@ -1,7 +1,8 @@
-@import 'tailwindcss';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'datatables.net-bs5';
 @import 'select2';
 @import 'select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css';
+@import 'toastr/build/toastr.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -13,13 +14,10 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/* Import Bootstrap */
-@import 'bootstrap/dist/css/bootstrap.min.css';
-
 /* Custom styles */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif !important;
+    background-color: #f8f9fa !important;
 }
 
 main {
@@ -60,7 +58,7 @@ main.auth {
 }
 
 #sidebar .nav-link.active {
-    background-color: #00c7c9;
+    background-color: #00c7c9 !important;
     color: #fff;
     padding: 0.5rem .5rem;
 }
@@ -104,7 +102,7 @@ footer p {
     line-height: 1.4;
 }
 .navbar-brand span {
-    color: #00c7c9;
+    color: #00c7c9 !important;
 }
 
 .page-title {
@@ -122,8 +120,8 @@ footer p {
 }
 
 .btn-primary {
-    background-color: #00c7c9;
-    border-color: #00c7c9;
+    background-color: #00c7c9 !important;
+    border-color: #00c7c9 !important;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
@@ -132,8 +130,8 @@ footer p {
 }
 
 .form-control:focus {
-    border-color: #00c7c9;
-    box-shadow: 0 0 0 0.25rem rgba(0, 199, 201, 0.25);
+    border-color: #00c7c9 !important;
+    box-shadow: none !important;
 }
 
 .form-control:focus-visible {
@@ -179,19 +177,58 @@ table.dataTable.table th {
 }
 
 .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field:focus {
-    border-color: #00c7c9;
+    border-color: #00c7c9 !important;
     box-shadow: none;
 }
 
 .select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection {
-    border-color: #00c7c9;
+    border-color: #00c7c9 !important;
     box-shadow: none;
 }
 
 .select2-container--bootstrap-5 .select2-dropdown {
-    border-color: #00c7c9;
+    border-color: #00c7c9 !important;
 }
 
 .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--selected, .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option[aria-selected=true]:not(.select2-results__option--highlighted) {
-    background-color: #00c7c9;
+    background-color: #00c7c9 !important;
+}
+
+/* Toastr Custom Styles */
+.toast-success {
+    background-color: var(--bs-success) !important;
+}
+
+.toast-error {
+    background-color: var(--bs-danger) !important;
+}
+
+.toast-warning {
+    background-color: var(--bs-warning) !important;
+}
+
+.toast-info {
+    background-color: var(--bs-info) !important;
+}
+
+.active>.page-link, .page-link.active {
+    background-color: #00c7c9 !important;
+    border-color: #00c7c9 !important;
+    color: #fff !important;
+}
+
+.page-link, .page-link:hover {
+    color: #00c7c9 !important;
+}
+
+.disabled>.page-link, .disabled>.page-link:hover {
+    color: #6c757d !important;
+}
+
+body .text-primary {
+    color: #00c7c9 !important;
+}
+
+body .text-primary:hover {
+    color: #00b3b5 !important;
 }

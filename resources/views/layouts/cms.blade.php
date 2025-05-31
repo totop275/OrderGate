@@ -18,6 +18,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
+    <style>
+    </style>
 </head>
 <body>
     @include('partials.header')
@@ -25,7 +27,7 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 d-sm-none d-md-block">
                     @include('partials.sidebar')
                 </div>
                 <div class="col-md-9" id="content-container">

@@ -206,7 +206,6 @@ return [
         'orders.detail',
         'orders.create',
         'orders.update',
-        'orders.delete',
 
         'products.browse',
         'products.create',

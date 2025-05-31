@@ -29,6 +29,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         $('#main-table').DataTable({
             theme: 'bootstrap5',
+            scrollX: true,
             processing: true,
             serverSide: true,
             ajax: "{{ route('customers.index') }}",
