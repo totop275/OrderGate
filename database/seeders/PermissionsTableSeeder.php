@@ -17,11 +17,11 @@ class PermissionsTableSeeder extends Seeder
         $roles = config('permission.built_in_roles');
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::updateOrCreate(['name' => $permission]);
         }
 
         foreach ($roles as $role => $permissions) {
-            $role = Role::create(['name' => $role]);
+            $role = Role::updateOrCreate(['name' => $role]);
             $role->givePermissionTo($permissions);
         }
     }
