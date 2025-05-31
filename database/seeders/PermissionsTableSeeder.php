@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Supports\Helper;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -13,12 +14,8 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = config('permission.built_in_permissions');
+        Helper::syncPermissions();
         $roles = config('permission.built_in_roles');
-
-        foreach ($permissions as $permission) {
-            Permission::updateOrCreate(['name' => $permission]);
-        }
 
         foreach ($roles as $role => $permissions) {
             $role = Role::updateOrCreate(['name' => $role]);

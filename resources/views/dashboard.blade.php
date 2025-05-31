@@ -12,25 +12,25 @@
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Total Orders</h3>
-            <div class="value">{{ number_format($totalOrders, 0) }}</div>
+            <div class="value fs-6">{{ number_format($totalOrders, 0) }}</div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Total Sales</h3>
-            <div class="value">${{ number_format($totalSales, 2) }}</div>
+            <div class="value fs-6">${{ number_format($totalSales, 2) }}</div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Active Users</h3>
-            <div class="value">{{ number_format($activeUsers, 0) }}</div>
+            <div class="value fs-6">{{ number_format($activeUsers, 0) }}</div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stat-card">
             <h3>Inactive Users</h3>
-            <div class="value">{{ number_format($inactiveUsers, 0) }}</div>
+            <div class="value fs-6">{{ number_format($inactiveUsers, 0) }}</div>
         </div>
     </div>
 </div>

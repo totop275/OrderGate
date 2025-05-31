@@ -13,12 +13,22 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::updateOrCreate([
-            'name' => 'Admin',
+        $userAdmin = User::updateOrCreate([
             'email' => 'admin@demo.com',
+        ],[
+            'name' => 'Adminudin',
             'password' => Hash::make('demo123'),
         ]);
 
-        $user->assignRole('Admin');
+        $userAdmin->assignRole('Admin');
+
+        $userStaff = User::updateOrCreate([
+            'email' => 'staff@demo.com',
+        ],[
+            'name' => 'Staffudin',
+            'password' => Hash::make('demo123'),
+        ]);
+
+        $userStaff->assignRole('Staff');
     }
 }

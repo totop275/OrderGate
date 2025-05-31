@@ -11,6 +11,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:users.browse')->only(['index']);
+        $this->middleware('can:users.create')->only(['create', 'store']);
+        $this->middleware('can:users.update')->only(['edit', 'update']);
+        $this->middleware('can:users.delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
@@ -113,7 +121,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if ($user->id === auth()->id()) {
+        if ($user->id === request()->user()->id) {
             return response()->json([
                 'message' => 'You cannot delete your own account.',
             ], 400);

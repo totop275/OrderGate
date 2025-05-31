@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Supports\Helper;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -10,6 +11,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:roles.browse')->only(['index']);
+        $this->middleware('can:roles.create')->only(['create', 'store']);
+        $this->middleware('can:roles.update')->only(['edit', 'update']);
+        $this->middleware('can:roles.delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
@@ -37,10 +46,7 @@ class RoleController extends Controller
 
     public function create()
     {
-        $permissions = config('permission.built_in_permissions');
-        foreach ($permissions as $permission) {
-            Permission::updateOrCreate(['name' => $permission]);
-        }
+        Helper::syncPermissions();
 
         $activeSidebar = 'roles.index';
         $permissionGroups = Permission::pluck('name')->groupBy(fn ($permission) => explode('.', $permission)[0]);
@@ -69,6 +75,8 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
+        Helper::syncPermissions();
+
         $activeSidebar = 'roles.index';
         $permissionGroups = Permission::pluck('name')->groupBy(fn ($permission) => explode('.', $permission)[0]);
         return view('master.role.edit', compact('role', 'activeSidebar', 'permissionGroups'));

@@ -208,21 +208,25 @@ return [
         'orders.update',
 
         'products.browse',
+        'products.detail',
         'products.create',
         'products.update',
         'products.delete',
 
         'customers.browse',
+        'customers.detail',
         'customers.create',
         'customers.update',
         'customers.delete',
 
         'users.browse',
+        'users.detail',
         'users.create',
         'users.update',
         'users.delete',
 
         'roles.browse',
+        'roles.detail',
         'roles.create',
         'roles.update',
         'roles.delete',
@@ -230,6 +234,23 @@ return [
 
     'built_in_roles' => [
         'Admin' => [],
-        'Staff' => [],
+        'Staff' => [
+            'orders.browse',
+            'orders.detail',
+            'orders.create',
+            'orders.update',
+    
+            'products.browse',
+            'products.detail',
+            'products.create',
+            'products.update',
+            'products.delete',
+    
+            'customers.browse',
+            'customers.detail',
+            'customers.create',
+            'customers.update',
+            'customers.delete',
+        ],
     ],
 ];

@@ -7,11 +7,18 @@ use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:orders.browse')->only(['index']);
+        $this->middleware('can:orders.detail')->only(['show']);
+        $this->middleware('can:orders.create')->only(['create', 'store']);
+        $this->middleware('can:orders.update')->only(['update']);
+    }
+
     public function index(Request $request)
     {
         if ($request->wantsJson()) {

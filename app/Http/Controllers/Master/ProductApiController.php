@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseCRUDController;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
-class ProductApiController extends Controller
+class ProductApiController extends BaseCRUDController
 {
-    public function show(Request $request, $product)
+    protected $model = Product::class;
+
+    public function show($product)
     {
+        $request = request();
         $resource = Product::where('sku', $product)->orWhere('id', $product);
 
         if ($request->has('status')) {

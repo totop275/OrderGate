@@ -134,47 +134,7 @@
             language: {
                 lengthMenu: "Show: _MENU_",
             },
-            order: [[1, 'asc']]
-        });
-
-        $('#main-table').on('click', '.delete-btn', function() {
-            const id = $(this).data('id');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You will not be able to recover this!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel',
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "{{ route('orders.destroy', ':id') }}".replace(':id', id),
-                        type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                        },
-                        success: function(response) {
-                            $('#main-table').DataTable().ajax.reload();
-                            Swal.fire({
-                                title: 'Deleted!',
-                                text: response.message || 'Order deleted successfully.',
-                                icon: 'success',
-                            });
-                        },
-                        error: function(xhr) {
-                            $('#main-table').DataTable().ajax.reload();
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'An error occurred while deleting the order.',
-                                icon: 'error',
-                            });
-                        }
-                    });
-                }
-            });
+            order: [[3, 'desc']]
         });
 
         $('.select2').select2({

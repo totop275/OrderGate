@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseCRUDController;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class OrderApiController extends Controller
+class OrderApiController extends BaseCRUDController
 {
+    protected $model = Order::class;
+
     public function store(Request $request)
     {
         $validated = $request->validate([

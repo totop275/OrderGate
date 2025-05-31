@@ -10,6 +10,7 @@ return [
     [
         'type' => 'section_header',
         'label' => 'Orders',
+        'permissions' => ['orders.browse'],
     ],
     [
         'label' => 'Create new order',
@@ -26,6 +27,7 @@ return [
     [
         'type' => 'section_header',
         'label' => 'Master Data',
+        'permissions' => ['products.browse', 'customers.browse'],
     ],
     [
         'label' => 'Products',
@@ -42,6 +44,7 @@ return [
     [
         'type' => 'section_header',
         'label' => 'Settings',
+        'permissions' => ['users.browse', 'roles.browse'],
     ],
     [
         'label' => 'Users',

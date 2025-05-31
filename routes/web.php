@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/', [HomeController::class, 'landing'])->name('landing');
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::resource('orders', OrderController::class)->except(['edit']);
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])
+        ->name('dashboard')
+        ->middleware('can:dashboard');
+
+    Route::resource('orders', OrderController::class)->except(['edit', 'destroy']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::resource('customers', CustomerController::class)->except(['show']);
     Route::resource('users', UserController::class)->except(['show']);

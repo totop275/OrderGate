@@ -15,6 +15,7 @@ class DemoDataSeeder extends Seeder
         $this->call([
             CustomerTableSeeder::class,
             ProductsTableSeeder::class,
+            OrderTableSeeder::class,
         ]);
     }
 }

@@ -18,20 +18,20 @@
     </div>
     <ul class="nav flex-column">
         @foreach (config('menu') as $key => $item)
-            @if (($item['type'] ?? null) === 'section_header')
-                <li class="nav-item">
-                    <span class="nav-title">{{ $item['label'] }}</span>
-                </li>
-            @else
             @canany($item['permissions'] ?? [])
+                @if (($item['type'] ?? null) === 'section_header')
+                    <li class="nav-item">
+                        <span class="nav-title">{{ $item['label'] }}</span>
+                    </li>
+                @else
                 <li class="nav-item">
                     <a href="{{ route($item['route']) }}" class="nav-link {{ ((($activeSidebar ?? null) == $item['route']) || request()->routeIs($item['route'])) ? 'active' : '' }}">
                         <i class="{{ $item['icon'] }}"></i>
                         <span>{{ $item['label'] }}</span>
                     </a>
                 </li>
+                @endif
             @endcanany
-            @endif
         @endforeach
     </ul>
 </nav>

@@ -9,6 +9,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:customers.browse')->only(['index']);
+        $this->middleware('can:customers.create')->only(['create', 'store']);
+        $this->middleware('can:customers.update')->only(['edit', 'update']);
+        $this->middleware('can:customers.delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
