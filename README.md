@@ -89,3 +89,7 @@ Ensure you have the following installed before proceeding (or use the provided D
 
 ## Demo
   You can access a live demo of the app without installation at: [https://ordergate.zsite.web.id](https://ordergate.zsite.web.id)
+
+## Other Information
+  - Due to time constraints, the project may not be fully optimized for mobile or small screen devices.
+  - Make sure to set the `APP_URL` environment variable to match your domain name
