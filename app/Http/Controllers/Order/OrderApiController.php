@@ -5,12 +5,22 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\BaseCRUDController;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderApiController extends BaseCRUDController
 {
     protected $model = Order::class;
+
+    protected function advancedFilter(Request $request, Builder $query) {
+        if ($request->has('start_date') && $request->start_date) {
+            $query->whereDate('order_date', '>=', $request->start_date);
+        }
+        if ($request->has('end_date') && $request->end_date) {
+            $query->whereDate('order_date', '<=', $request->end_date);
+        }
+    }
 
     public function store(Request $request)
     {
@@ -75,6 +85,8 @@ class OrderApiController extends BaseCRUDController
             }
     
             $order->update(['total_amount' => $total]);
+
+            $order->load('orderProducts');
             
             DB::commit();
         } catch (\Exception $e) {
@@ -85,6 +97,16 @@ class OrderApiController extends BaseCRUDController
         return response()->json([
             'data' => $order,
             'message' => 'Order created successfully.',
+        ]);
+    }
+
+    public function show($resource)
+    {
+        $result = Order::where('order_number', $resource)->orWhere('id', $resource)->firstOrFail();
+        $result->load('orderProducts.product', 'customer', 'creator', 'verifier');
+
+        return response()->json([
+            'data' => $result,
         ]);
     }
 

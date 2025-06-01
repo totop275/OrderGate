@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Hash;
 class UserApiController extends BaseCRUDController
 {
     protected $model = User::class;
+    protected $freeText = ['name'];
+
+    public function show($user)
+    {
+        $result = User::where('id', $user)->orWhere('email', $user)->firstOrFail();
+        $result->load('roles');
+
+        return response()->json([
+            'data' => $result,
+        ]);
+    }
 
     public function store(Request $request)
     {
@@ -17,7 +28,7 @@ class UserApiController extends BaseCRUDController
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'roles' => 'required|array',
+            'roles' => 'sometimes|nullable|array',
             'status' => 'required|in:' . implode(',', [User::STATUS_ACTIVE, User::STATUS_INACTIVE]),
         ]);
         
@@ -28,7 +39,9 @@ class UserApiController extends BaseCRUDController
             'status' => $validated['status'],
         ]);
 
-        $user->syncRoles($validated['roles']);
+        if (isset($validated['roles'])) {
+            $user->syncRoles($validated['roles']);
+        }
 
         return [
             'data' => $user,
@@ -43,7 +56,7 @@ class UserApiController extends BaseCRUDController
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8',
-            'roles' => 'required|array',
+            'roles' => 'sometimes|nullable|array',
             'status' => 'required|in:' . implode(',', [User::STATUS_ACTIVE, User::STATUS_INACTIVE]),
         ]);
         
@@ -57,7 +70,9 @@ class UserApiController extends BaseCRUDController
             $user->update(['password' => Hash::make($validated['password'])]);
         }
 
-        $user->syncRoles($validated['roles']);
+        if (isset($validated['roles'])) {
+            $user->syncRoles($validated['roles']);
+        }
 
         return [
             'data' => $user,

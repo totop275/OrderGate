@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 class CustomerApiController extends BaseCRUDController
 {
     protected $model = Customer::class;
+    protected $freeText = ['name'];
 
     protected function advancedFilter(Request $request, Builder $query) {
-        if ($request->has('search')) {
+        if ($request->has('search') && $request->search) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
     }

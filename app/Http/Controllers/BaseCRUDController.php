@@ -10,6 +10,7 @@ abstract class BaseCRUDController extends Controller
 {
     protected $model;
     protected $freeText = [];
+    protected $availableRelations = [];
 
     public function __construct()
     {
@@ -29,6 +30,7 @@ abstract class BaseCRUDController extends Controller
 
         $blankModel = new $this->model();
         $fillable = $blankModel->getFillable();
+        $fillable = array_merge($fillable, ['created_at', 'updated_at', 'id']);
         $hidden = $blankModel->getHidden();
 
         $filterable = array_diff($fillable, $hidden);
@@ -41,6 +43,10 @@ abstract class BaseCRUDController extends Controller
                     $query->where($field, $request->$field);
                 }
             }
+        }
+
+        if ($request->order_by && in_array($request->order_by, $filterable)) {
+            $query->orderBy($request->order_by, $request->order_direction ?? 'asc');
         }
         
         $result = $query->paginate($request->per_page ?? 10);
@@ -55,8 +61,9 @@ abstract class BaseCRUDController extends Controller
     {
         $result = $this->model::findOrFail($resource);
 
-        $availableRelations = $this->model->getAvailableRelations();
-        $result->load($availableRelations ?? []);
+        if ($this->availableRelations) {
+            $result->load($this->availableRelations);
+        }
 
         return response()->json([
             'data' => $result,

@@ -16,7 +16,7 @@ class ProductApiController extends BaseCRUDController
         $request = request();
         $resource = Product::where('sku', $product)->orWhere('id', $product);
 
-        if ($request->has('status')) {
+        if ($request->has('status') && $request->status) {
             $resource = $resource->where('status', $request->status);
         }
 
