@@ -13,7 +13,7 @@ abstract class BaseCRUDController extends Controller
 
     public function __construct()
     {
-        $pluralName = Str::plural(class_basename($this->model));
+        $pluralName = strtolower(Str::plural(class_basename($this->model)));
         $this->middleware('can:' . $pluralName . '.browse')->only(['index']);
         $this->middleware('can:' . $pluralName . '.detail')->only(['show']);
         $this->middleware('can:' . $pluralName . '.create')->only(['store']);
