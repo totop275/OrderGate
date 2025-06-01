@@ -1,61 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Setup Guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Follow the steps below to set up and run the project.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Ensure you have the following installed before proceeding (or use the provided Docker image to simplify setup):
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **PHP** > 8
+- **Composer** 
+- **NPM** 
+- **MySQL** (or your preferred database)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Installation Steps
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone the Repository**  
+   Run the following command in your terminal to clone the project:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   ```bash
+   git clone https://github.com/totop275/OrderGate.git
+   cd OrderGate
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Set Up Environment Variables**  
+   Copy the `.env.example` file to `.env`:
 
-## Laravel Sponsors
+   ```bash
+   cp .env.example .env
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+   - Update `.env` with your environment-specific configurations (e.g., database credentials, app URL).
+   - If you're using Docker, run `docker compose build` followed by `docker compose up -d`. The app should start as expected. If not, proceed to the next step.
 
-### Premium Partners
+3. **Install Composer Dependencies**  
+   Run the following command to install all backend dependencies:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+   ```bash
+   composer install
+   ```
 
-## Contributing
+4. **Database Setup**  
+   - Run migrations to create the database schema:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+     ```bash
+     php artisan migrate
+     ```
 
-## Code of Conduct
+   - Seed the database with initial data:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+     ```bash
+     php artisan db:seed
+     ```
 
-## Security Vulnerabilities
+   - Seed the demo data (optional):
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+     ```bash
+     php artisan db:seed --class=DemoDataSeeder
+     ```
 
-## License
+## Accessing the Application
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Default Admin Credentials:**  
+  - **Email:** admin@demo.com  
+  - **Password:** demo123
+
+- **Default Staff Credentials:**  
+  - **Email:** staff@demo.com  
+  - **Password:** demo123
+
+---
+
+## Additional Commands
+
+- **Clear Cache:**  
+  Run the following to clear caches (config, routes, views, etc.):
+
+  ```bash
+  php artisan optimize:clear
+  ```
+
+- **Serve the Application Locally (if not using a web server):**  
+  ```bash
+  php artisan serve
+  ```
+## Frontend API
+  The frontend API documentation can be viewed at: [https://documenter.getpostman.com/view/9714415/2sB2qgeJFq](https://documenter.getpostman.com/view/9714415/2sB2qgeJFq)
+
+## Demo
+  You can access a live demo of the app without installation at: [https://ordergate.zsite.web.id](https://ordergate.zsite.web.id)
