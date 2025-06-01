@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('roles', RoleController::class)->except(['show']);
 });
 
-Route::middleware(['guest', 'web'])->group(function () {
+Route::middleware(['guest'])->group(function () {
     Route::get('/login', [LoginController::class, 'loginView'])->name('login_view');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
